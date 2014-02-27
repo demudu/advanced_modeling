@@ -45,7 +45,8 @@ The content of the class handles the cases when the basic assumptions of regress
 - [Time Fixed Effect](https://github.com/NCSU-Analytics/advanced_modeling/blob/master/advanced_modeling_notes.md#time-fixed-effect)
 - [Two-way Fixed Effects Model](https://github.com/NCSU-Analytics/advanced_modeling/blob/master/advanced_modeling_notes.md#two-way-fixed-effects-model)
 - [Random Effects Model](https://github.com/NCSU-Analytics/advanced_modeling/blob/master/advanced_modeling_notes.md#random-effects-model)
-- 
+
+
 
 ----
 
