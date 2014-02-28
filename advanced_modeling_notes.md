@@ -730,7 +730,8 @@ We can test to see if we have a problem with endogeneity and also test to see if
 
 There are several steps in the process.
 
-H<sub>0</sub>: x<sub>i</sub> is *exogenous*
+H<sub>0</sub>: x<sub>i</sub> is **exogenous**
+
 H<sub>a</sub>: x<sub>i</sub> is endogenous
 
 We want a high p-value when doing this test. That means that the variables are exogenous and we don't have a problem of independence.
@@ -780,6 +781,7 @@ H<sub>0</sub>: Not too many instrumental variables
 H<sub>a</sub>: Too many instrumental variables
 
 **Steps:**
+
 1. Estimate by 2SLS and keep residuals.
 2. Regress residuals on all exogenous variables (including instrumental variables).
 3. Obtain R<sup>2</sup>.
@@ -843,7 +845,7 @@ Solving them:
 - Very similar to the problem of an explanatory variable being measured with error.
 - Therefore, using OLS on this problem will lead to biased estimates. 
 - We can use 2SLS to solve this problem! We already have the instrumental variables.
-- Typically, the trouble with 2SLS is finding good instrumental varialbes -- not as much the case in simultaneous equations.
+- Typically, the trouble with 2SLS is finding good instrumental variables -- not as much the case in simultaneous equations.
 
 We will use z<sub>2</sub> as the instrument. You can do 2SLS on either of the equations.
 
@@ -995,6 +997,7 @@ There are formal tests for heteroscedasticity.
 2. Breusch-Pagan test
 
 For both tests:
+
 H<sub>0</sub>: Homoscedasticity
 H<sub>a</sub>: Heteroscedasticity
 
@@ -1005,11 +1008,13 @@ High p-values are what we want.
 The test created by White is a general test that looks for the relationship between the variance of the residuals and functions of the predictor variables. 
 
 Steps:
+
 1. Use OLS to estimate the residuals and their variance.
 2. Conduct OLS on the variance with all predictor variables, their squared values, and their interactions. Trying to predict the variance of the residuals based on the inputs in the model.
 3. Record the R<sup>2</sup> value - nR<sup>2</sup> ~ X<sup>2</sup><sub>p-1</sub>
 
 **Disadvantages**
+
 1. There is low power in actually detecting heteroscedasticity when it might exist. It leans on the side of telling you that you do not have a problem.
 2. If you reject the null hypothesis in the White test, there is no indication of the problematic variables.
 
@@ -1293,12 +1298,14 @@ quit;
 ### Robust Regression
 
 There are 2 main goals for robust regression:
+
 1. Perform almost as well as OLS in uncontaminated (Normally distributed) data.
 2. Perform better than OLS in contaminated (non-Normally distributed data).
 
 An **anomalous observation** is an outlier or an influential point. 
 
 There are two types of anomalous observations that will be discussed:
+
 1. **Outliers**: point with a large standardized residual (lie far away from the fitted line in the Y-direction).
 2. **Leverage Points**: point that fall outside the normal range (far from the mean) in the X-space (possible values of the predictors).
 
@@ -1317,6 +1324,7 @@ There is another way to think about outliers in a regression data set. The outli
 Robust regression tries to get at the notion that this doesn't follow a Normal distribution.
 
 SAS has 4 different estimation methods for robust regression:
+
 - M-estimation: solves outliers
 - LTS (Least Trimmed Squares) estimation: solves leverage points
 - S-estimation (don't use this)
@@ -1326,6 +1334,7 @@ SAS has 4 different estimation methods for robust regression:
 
 Global Growth Study Data
 Variables:
+
 - Labor Force Growth
 - Relative GDP Gap
 - Equipment Investment
@@ -1450,6 +1459,7 @@ run;
 **MM-Estimation**
 
 Yohai combined the high breakdown point qualities of the S-estimator with the efficiency of the M-estimator approach to create the MM-estimator. Steps:
+
 1. Calculate S-estimator
 2. Use S-estimate as initial point in residual scale calculation than is robust (aka get a more accurate estimate of the spread of your residuals). 
 3. Put this scale of the residuals into an M-estimator equation. 
@@ -1480,20 +1490,23 @@ This is also referred to as longitudinal data. It looks across many people acros
 Time series data is just looking at a single thing changing over time. Panel data is a combination of the two.
 
 Examples:
+
 - Cost of tickets for 6 US airlines across the years 1970-1984
 - Gas prices across states between 1990 and 2010
 - Profit of financial advisors measured across years.
 
 There are two advantages to using panel data methods:
+
 1. Increased sample size
 2. Control for unobserved differences between individual subjects. 
 
 With the airlines example, the structure is:
+
 - Single cross-section only has 6 observations
 - Single time-series only has 15 observations.
 - Panel data has 6 x 15 = 90 observations.
 
-Panel data typicall has **n cross-sections across T  periods in time** means you have nT observations.
+Panel data typically has **n cross-sections across T  periods in time** means you have nT observations.
 
 The advantage is that we can control for things that we cannot observe. Imagine that there exists some unobservable variables that we know influence our results. This is a concern because it is omitted variable bias. 
 
@@ -1518,6 +1531,7 @@ Every airline has a different baseline ticket price, but other external effects 
 You can tell from the intercept who starts at higher and lower levels that other individuals. How we treat the intercept will influence the type of model that we built.
 
 There are three ways to model the intercept:
+
 1. Pooled regression model
 2. Fixed effects model
 3. Random effects model
@@ -1576,6 +1590,7 @@ You assume that each individual has its own effect and you care about the effect
 ![img](pics/pic_087.png)
 
 Each a<sub>i</sub> is specific to the individuals in the data set. We make assumptions when we do this.
+
 1. We're assuming linearity
 2. No perfect collinearity between predictor variables **and** each predictor variable changes across time for *some subject*. In other words, you can't have a predictor that doesn't change across time for *somebody*. 
 3. There is no correlation between predictor variables and errors -- no endogeneity. After accounting for the unobserved effect a<sub>i</sub>, there is no correlation between predictors and erros.
@@ -1674,6 +1689,7 @@ The alpha is the grand intercept and the u accounts for differences across subje
 SAS now will report two errors to us. 
 
 Assumptions:
+
 1. Linearity
 2. No perfect collinearity between predictor variables
 **3. No endogeneity between predictor variables and EITHER error term.**
@@ -1688,7 +1704,9 @@ There are tests to see if our model follows a random effects structure. However,
 Sort of equivalent to the F-test for fixed effects tests. 
 
 **Hausman test**: complicated test
+
 H<sub>0</sub>: Random effects good
+
 H<sub>a</sub>: Fixed effects good
 
 You can ask for the various intercepts. `covout` shows a covariance structure between variables. There are more options. 
@@ -1768,6 +1786,7 @@ We must use MLE instead of OLS. The predicted values are not going to be integer
 
 **Example**
 We will use PROC COUNTREG to solve the problem. The data consists of 181 international manufacturing firms with many explanatory variables about each:
+
 - Annual expenditures on R & D
 - Industrial Sector
 - Country of registered office
@@ -1844,8 +1863,9 @@ The model and interpretation in Negative Binomial regression remains the same as
 
 #### The Likelihood Ratio test
 
-H<sub>0</sub>: Poisson regression (alpha = 0)
-H<sub>a</sub>: Negative Binomial regression (alpha > 0)
+**H<sub>0</sub>:** Poisson regression (alpha = 0)
+
+**H<sub>a</sub>:** Negative Binomial regression (alpha > 0)
 
 The idea of the test... you have a nested distribution inside of a larger distribution. The Poisson is nested inside of the Neg Binomial. You can compare the likelihoods of the two. If the likelihoods are the same, then use the simplier distribution: Poisson. If the likelihoods are different, then the Negative Binomial is providing more information than the Poisson and should be used.
 
@@ -1875,7 +1895,7 @@ With this distribution, not as many variables look significant.
 
 Statistically, this is not zero, so that means that the Negative Binomial distribution is better and the p-values and parameter estimates are more believable. 
 
-If _Alpha is not significant, you should use the Poisson instead.
+If `_Alpha` is not significant, you should use the Poisson instead.
 
 
 #### Zero-Inflated Count Regressions
