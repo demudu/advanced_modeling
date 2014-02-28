@@ -106,9 +106,9 @@ Regular OLS is unbiased, but not precise. That is the problem with multicollinea
 
 ![pic](pics/pic_001.png)
 
-The best that you are making is that anything that is in the group on the right is likely to be closer to the center of the target than a random point taken from the group of the left.
+The bet that you are making is that anything that is in the group on the right is likely to be closer to the center of the target than a random point taken from the group of the left.
 
-We are going to intentionally not aim at the right answer to get better precision. Typically, we won't have a flipped sign on a parameter estimate.
+We are going to intentionally not aim at the correct answer to get better precision. Typically, we won't have a flipped sign on a parameter estimate.
 
 #### Approaches
 
@@ -126,7 +126,7 @@ Ideally, drop a variable if you can, instead of using PCR or ridge regression. T
 
 Every linear regression model can be restated in terms of a new set of orthogonal predictor variables that are a linear combination of the original variables. These are called **prinicipal components**. The weighted set of variable combinations are orthogonal and not correlated at all.
 
-In principal components, you do not take into consideration the responsible variable at all. PC 1 represents the most variability in the data cloud. Once we establish the first one, the others become easier -- we just find the directions orthogonal. The direction orthogonal to PC 1 is PC 2. If you have 10 variables, you have a 10-dimensional data cloud and you have to have 10 Principal Components to describe it.
+In principal components, you do not take into consideration the response variable at all. PC 1 represents the most variability in the data cloud. Once we establish the first one, the others become easier -- we just find the directions orthogonal. The direction orthogonal to PC 1 is PC 2. If you have 10 variables, you have a 10-dimensional data cloud and you must have 10 Principal Components to describe it.
 
 PCs are a linear combination of the old variables. Take the coefficients on all of the variables that comprise the Principal components -- put them in a vector and you have an eigenvector. The eigenvalue is just the length of the eigenvector.
 
@@ -307,6 +307,7 @@ a<sub>12</sub>x<sub>1</sub> + a<sub>22</sub>x<sub>2</sub> + a<sub>32</sub>x<sub>
 ...
 
 That is the same as this:
+
 ![img](pics/pic_015.png)
 
 So, r<sub>1,y</sub> is the correlation between x<sub>1</sub> and y. Etc... **In the matrix in the above image, the diagonal has all values of 1.** That is because the thetas represent the correlation between a variable and itself. 
@@ -735,12 +736,14 @@ H<sub>a</sub>: x<sub>i</sub> is endogenous
 We want a high p-value when doing this test. That means that the variables are exogenous and we don't have a problem of independence.
 
 Steps:
+
 1. **Regress x<sub>i</sub> on all other predictor variables and instrumental variables.** 
 2. Keep the residuals. They are all of the extra information that variable provides that none of the variables do. 
 3. Regress y<sub>i</sub> on all variables (except instrumental ones) and the residuals from the previous step.
 4. Test coefficient on residual variable. 
 
 If the coefficient is **not significant**, then x<sub>i</sub> is exogenous.
+
 If the coefficient is **significant**, then x<sub>i</sub> is endogenous.
 
 In the following, we think that education is a suspect variable, so you run a regression with education as the outcome and the other "good" variables and instruments as the predictors. 
