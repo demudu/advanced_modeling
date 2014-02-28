@@ -14,6 +14,8 @@ The content of the class handles the cases when the basic assumptions of regress
 - [The Ridge Trace](https://github.com/NCSU-Analytics/advanced_modeling/blob/master/advanced_modeling_notes.md#the-ridge-trace)
 - [Cautions with Ridge Regression](https://github.com/NCSU-Analytics/advanced_modeling/blob/master/advanced_modeling_notes.md#cautions-with-ridge-regression)
 - [Ridge Regression R Code](https://github.com/NCSU-Analytics/advanced_modeling/blob/master/advanced_modeling_notes.md#relevant-r-code)
+
+
 - [Instrumental Variables](https://github.com/NCSU-Analytics/advanced_modeling/blob/master/advanced_modeling_notes.md#instrumental-variables)
 - [Omitted Variable Bias](https://github.com/NCSU-Analytics/advanced_modeling/blob/master/advanced_modeling_notes.md#omitted-variable-bias)
 - [Measurement Error](https://github.com/NCSU-Analytics/advanced_modeling/blob/master/advanced_modeling_notes.md#measurement-error)
@@ -24,6 +26,8 @@ The content of the class handles the cases when the basic assumptions of regress
 - [Test of Overspecification](https://github.com/NCSU-Analytics/advanced_modeling/blob/master/advanced_modeling_notes.md#test-of-overspecification)
 - [Simultaneous Equations](https://github.com/NCSU-Analytics/advanced_modeling/blob/master/advanced_modeling_notes.md#simultaneous-equations)
 - [Estimating Parameters in Simultaneous Equations](https://github.com/NCSU-Analytics/advanced_modeling/blob/master/advanced_modeling_notes.md#estimating-parameters-in-simultaneous-equations)
+
+
 - [Heteroscedasticity and Weighted Least Squares](https://github.com/NCSU-Analytics/advanced_modeling/blob/master/advanced_modeling_notes.md#heteroscedasticity-and-weighted-least-squares-wls)
 - [Accounting for Heteroscedasticity](https://github.com/NCSU-Analytics/advanced_modeling/blob/master/advanced_modeling_notes.md#accounting-for-heteroscedasticity)
 - [White's General Test](https://github.com/NCSU-Analytics/advanced_modeling/blob/master/advanced_modeling_notes.md#whites-general-test)
@@ -32,11 +36,15 @@ The content of the class handles the cases when the basic assumptions of regress
 - [Addressing Heteroscedasticity Problems - Robust Standard Errors](https://github.com/NCSU-Analytics/advanced_modeling/blob/master/advanced_modeling_notes.md#addressing-heteroscedasticity-problems---robust-standard-errors)
 - [Weighted Least Squares](https://github.com/NCSU-Analytics/advanced_modeling/blob/master/advanced_modeling_notes.md#weighted-least-squares)
 - [Feasible Generalized Least Squares (FGLS)](https://github.com/NCSU-Analytics/advanced_modeling/blob/master/advanced_modeling_notes.md#feasible-generalized-least-squares-fgls)
+
+
 - [Robust Regression](https://github.com/NCSU-Analytics/advanced_modeling/blob/master/advanced_modeling_notes.md#robust-regression)
 - [Distributional Outliers](https://github.com/NCSU-Analytics/advanced_modeling/blob/master/advanced_modeling_notes.md#distributional-outliers)
 - [Huber's M-Estimation](https://github.com/NCSU-Analytics/advanced_modeling/blob/master/advanced_modeling_notes.md#hubers-m-estimation)
 - [Least Trimmed Squares (LTS)](https://github.com/NCSU-Analytics/advanced_modeling/blob/master/advanced_modeling_notes.md#least-trimmed-squares-lts)
 - [S-estimation and MM-estimation](https://github.com/NCSU-Analytics/advanced_modeling/blob/master/advanced_modeling_notes.md#s-estimation-and-mm-estimation)
+
+
 - [Panel Data](https://github.com/NCSU-Analytics/advanced_modeling/blob/master/advanced_modeling_notes.md#panel-data)
 - [Panel Data Model](https://github.com/NCSU-Analytics/advanced_modeling/blob/master/advanced_modeling_notes.md#panel-data-model)
 - [Pooled Regression Model](https://github.com/NCSU-Analytics/advanced_modeling/blob/master/advanced_modeling_notes.md#pooled-regression-model)
@@ -45,6 +53,15 @@ The content of the class handles the cases when the basic assumptions of regress
 - [Time Fixed Effect](https://github.com/NCSU-Analytics/advanced_modeling/blob/master/advanced_modeling_notes.md#time-fixed-effect)
 - [Two-way Fixed Effects Model](https://github.com/NCSU-Analytics/advanced_modeling/blob/master/advanced_modeling_notes.md#two-way-fixed-effects-model)
 - [Random Effects Model](https://github.com/NCSU-Analytics/advanced_modeling/blob/master/advanced_modeling_notes.md#random-effects-model)
+
+
+- [Count Data](https://github.com/NCSU-Analytics/advanced_modeling/blob/master/advanced_modeling_notes.md#count-data)
+- [Poisson Regression](https://github.com/NCSU-Analytics/advanced_modeling/blob/master/advanced_modeling_notes.md#poisson-regression)
+- [Interpretation of Beta Values](https://github.com/NCSU-Analytics/advanced_modeling/blob/master/advanced_modeling_notes.md#interpretation-of-beta-values)
+- [Negative Binomial Regression](https://github.com/NCSU-Analytics/advanced_modeling/blob/master/advanced_modeling_notes.md#negative-binomial-regression)
+- [Overdispersion](https://github.com/NCSU-Analytics/advanced_modeling/blob/master/advanced_modeling_notes.md#overdispersion)
+- [The Likelihood Ratio Test](https://github.com/NCSU-Analytics/advanced_modeling/blob/master/advanced_modeling_notes.md#the-likelihood-ratio-test)
+- [Zero-Inflated Count Regressions](https://github.com/NCSU-Analytics/advanced_modeling/blob/master/advanced_modeling_notes.md#zero-inflated-count-regressions)
 
 
 
