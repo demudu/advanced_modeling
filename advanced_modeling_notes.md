@@ -911,6 +911,7 @@ The old t-test was not a valid one because of the endogeneous relationship. Howe
 How could we measure the impact of an increase in an exogenous variable on the endogenous variables?
 
 For example, what would be the impact of increasing the variable per capita income on crime rate?
+
 - The variable per capita income impacts number of police officers.
 - Number of police officers impacts crime rate.
 - Crime rate affects number of police officers.
@@ -1020,12 +1021,13 @@ Steps:
 
 #### Breusch-Pagan Test
 
-Heteroscedasticity is typically caused by a relationship of the variance of the residuals with one (or more) predictor variables (or functions of them). The Breusch-Pahan test is preferred to the White general test because it restricts attention on specific explanatory variables.
+Heteroscedasticity is typically caused by a relationship of the variance of the residuals with one (or more) predictor variables (or functions of them). The Breusch-Pagan test is preferred to the White general test because it restricts attention on specific explanatory variables.
 
 ![img](pics/pic_051.png)
 
-H<sub>0</sub>: a = 0
-H<sub>a</sub>: a != 0
+**H<sub>0</sub>:** a = 0
+
+**H<sub>a</sub>:** a != 0
 
 We are just testing if the coefficients on the vector of problem variables are equal to 0. 
 
@@ -1129,7 +1131,7 @@ The rest of the lines are the same -- they start at 0.
 - `HCCME=0` is the original White test. 
 - `HCCME=1` through `HCCME=3` are the adjustments they made. 3 is the most modern way of using it and what you should try to use. 
 
-`HCCME=3` is a very complicated way of estimating the matrix, so it is not guaranteed to estimate the values, so you may have to use the earlier tests in order to actually calculate the values. If this fails, try `HCCME=1`. It is very easy to calculate. `HCCME=0=2` also is complicated. 
+`HCCME=3` is a very complicated way of estimating the matrix, so it is not guaranteed to estimate the values, so you may have to use the earlier tests in order to actually calculate the values. If this fails, try `HCCME=1`. It is very easy to calculate. `HCCME=2` also is complicated. 
 
 Try them in this order:
 - `HCCME=3`
@@ -1319,7 +1321,7 @@ The further away from the horizontal that the point is, the more of a leverage p
 
 #### Distributional Outliers
 
-There is another way to think about outliers in a regression data set. The outliers are actually a result of the error distribution in the regression not following a Normal distribution -- instead a "thick-tailed" distribution. A distribution with "thicker tails" than a Normal distribution woudl have a higher probability of producing larger errors than those that would be expected from a Normal distribution. This causes an increase in the variability of sigma<sub>e</sub>. 
+There is another way to think about outliers in a regression data set. The outliers are actually a result of the error distribution in the regression not following a Normal distribution -- instead a "thick-tailed" distribution. A distribution with "thicker tails" than a Normal distribution would have a higher probability of producing larger errors than those that would be expected from a Normal distribution. This causes an increase in the variability of sigma<sub>e</sub>. 
 
 Robust regression tries to get at the notion that this doesn't follow a Normal distribution.
 
@@ -1477,7 +1479,7 @@ proc robustreg data=Advanced.Growth method=mm plots=all;
 run;
 ```
 
-MM-estimation can handle only outliers or leverage points, but it's not the best tool for an isolated problem. 
+MM-estimation can handle outliers or leverage points, but it's not the best tool for an isolated problem. 
 
 There are hundreds of adjustments to each of these functions inside of SAS. See the documentation for more information. There are different bounding functions, weight functions, and algorithms. 
 
@@ -1602,8 +1604,9 @@ There are many ways to estimate a fixed effects model, with the most popular bei
 
 SAS calculates the following F-test to see if we actually have a pooled regression model. If all of the a<sub>i</sub> are equal to the same number, then they aren't changing and we have a pooled effects model.
 
-H<sub>0</sub>: a<sub>i</sub> = a
-H<sub>a</sub>: At least one a<sub>i</sub> is different
+**H<sub>0</sub>:** a<sub>i</sub> = a
+
+**H<sub>a</sub>:** At least one a<sub>i</sub> is different
 
 In panel data, you have to identify who your people are and what time period it is. You have to enter them in that order.
 
@@ -1698,7 +1701,9 @@ Assumptions:
 There are tests to see if our model follows a random effects structure. However, you should know this ahead of time. Let the structure of the problem tell you what you should use. 
 
 **LM (Lagrange Multiplier) test:**
+
 **H<sub>0</sub>**: sigma<sup>2</sup><sub>u</sub> = 0
+
 **H<sub>a</sub>**: sigma<sup>2</sup><sub>u</sub> > 0
 
 Sort of equivalent to the F-test for fixed effects tests. 
