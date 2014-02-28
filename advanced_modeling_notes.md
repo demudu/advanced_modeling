@@ -1701,4 +1701,218 @@ proc panel data=Advanced.Airlines outest=out2 covout;
 run;
 ```
 
+----
+
+### Count Data
+
+Count data is integer-based data. Discrete (or count) response variables. We will use Poisson or Negative Bionomial regression to handle it.
+
+Discrete data is integer data bounded below (typicall zero) and typicall unbounded above. Due to the lower bound, count data doesn't typicall follow a Normal distribution. Common distributional assumption of cound data is the Poisson distribution. For example, the number of customers that will come into my store tomorrow. The number of cars that I will sell this month.
+
+There is only one parameter in the **discrete** Poisson distribution, lambda, which is the mean (the expected value):
+
+![img](pics/pic_098.png)
+
+It can handle things that are bounded below, but also things that have really high means and some kind of general symmetry.
+
+The **probability mass function (pmf)** of the Poisson distribution. It lacks a continuous stream. That's why the above graph has bars and not a curve. We are assuming discrete values.
+
+![img](pics/pic_099.png)
+
+Lambda is the mean -- what we care about. 
+
+#### Poisson Regression
+
+We have to model things differently to handle this. 
+
+![img](pics/pic_100.png)
+
+We have to force lambda to always be positive. We look at the exponential of a function to make that happen. We are trying to predict the average count. 
+
+We are modeling the mean.
+
+This is a nonlinear function so it must be converted for modeling. 
+
+![img](pics/pic_101.png)
+
+This guarantees positive predicted values. 
+
+We must use MLE instead of OLS. The predicted values are not going to be integers, so the residuals will not be in the same type of units that make sense. Therefore, we'll use Maximum Likelihood Estimation (MLE) instead of OLS.
+
+**Example**
+We will use PROC COUNTREG to solve the problem. The data consists of 181 international manufacturing firms with many explanatory variables about each:
+- Annual expenditures on R & D
+- Industrial Sector
+- Country of registered office
+- Total number of patent applications (trying to predict)
+
+It's always good to specify the distribution that you want, just to make sure that you're getting what you expect. Unlike PROC PANEL, there is an output statement here.
+
+```
+/* Poisson Regression */
+
+proc countreg data=Advanced.Patent;
+    model p91 = lr91 aerosp chemist computer machine vehicles japan us / dist=poisson;
+    output out=test pred=p;
+run;
+
+```
+
+![img](pics/pic_102.png)
+
+The AIC and SBC both are useful here. You have to make sure that convergence happens when we are maximizing likelihood.
+
+The results make it look that everything is significant, ASSUMING that the Poisson distribution is the proper distribution. 
+
+#### Interpretation of beta values
+
+Interpretation is slightly different due to the transformation from the log function. Dummy variables are the easiest to interpret. 
+
+What we are looking at is a ratio of counts. For example, if we took -0.3 for the beta value on US and plugged it into the second formula, we will get the value that represents the ratio of counts of patents awarded to US companies vs awarded to other international companies.
+
+![img](pics/pic_103.png)
+
+Aerospace would have far fewer patents than other industries in this example.
+
+Continuous variables are harder to interpret. If, for example, you are looking at research dollars, then if you had a company that's R&D dollars went up by 1,000,000 compared to before, then we would expect the count of patents to go up by the given number. It is similar to a hazard ratio in survival analysis. 
+
+![img](pics/pic_104.png)
+
+What is the ratio of extra count that you get?
+
+**Is Poisson the right distribution to pick from?**
+
+### Negative Binomial Regression
+
+The Poisson falls into this family. Is a Poisson distribution, the mean and the variance are equal to each other. That's why it only has one thing that you are estimating. If you know the mean, you know the variance - they are set to be equal to each other. This is called **equidispersion**. **Underdispersion** is where the variance is smaller than the mean. 
+
+Sometimes you want something that is a little more general.
+
+When you have count data, you typically are dealing with something where the variance is a lot larger than the mean. Therefore, we usually aren't going to want to use the Poisson distribution.
+
+#### Overdispersion
+
+This is when the variance is a lot larger than the mean in the distribution.
+
+Let's take a look at the mean and the variance of the predicted values that we saved and of the actual y values.
+
+```
+proc means data=test mean var;
+    var p p91;
+run;
+```
+The second entry are the actual values. The variance is much larger than the mean. The mean of the predicted values are much smaller than the actual data because we are trying to force the Poisson distribution. 
+
+![img](pics/pic_105.png)
+
+If you quickly glance at this data and see such a huge disparity, then you know that you probably shouldn't be working with the Poisson distribution. They have to be the same number.
+
+This is the negative binomial distribution:
+
+![img](pics/pic_106.png)
+
+It is bounded at 0 on the lower end and it does not require equidispersion. The Poisson distribution is a special case of the negative binomial distribution.
+
+The model and interpretation in Negative Binomial regression remains the same as in Poisson regression. It's just a different underlying distribution that doesn't have the restrictions of the Poisson distribution. There is a test to determine if the Negative Binomial model is an improvement over a Poisson model because of overdispersion -- the Likelihood Ratio test.
+
+#### The Likelihood Ratio test
+
+H<sub>0</sub>: Poisson regression (alpha = 0)
+H<sub>a</sub>: Negative Binomial regression (alpha > 0)
+
+The idea of the test... you have a nested distribution inside of a larger distribution. The Poisson is nested inside of the Neg Binomial. You can compare the likelihoods of the two. If the likelihoods are the same, then use the simplier distribution: Poisson. If the likelihoods are different, then the Negative Binomial is providing more information than the Poisson and should be used.
+
+1. Evaluate model with Poisson regression and record the log(likelihood) value.
+2. Evaluate model with Negative Binomial regression and record log(Likelihood) value.
+3. Take the difference and calculate the X<sup>2</sup> value. It has 1 degree of freedom.
+
+Calculate LR = -2[log(L<sub>P</sub>) - log(L<sub>NB</sub>)] ~ X<sup>2</sup><sub>1</sub>
+
+In NB, variance = mean + alpha x mean<sup>2</sup>
+
+Negative Binomial code is the same with a different distribution.
+
+```
+/* Negative Binomial Regression */
+
+proc countreg data=Advanced.Patent;
+    model p91 = lr91 aerosp chemist computer machine vehicles japan us / dist=negbin;
+run;
+```
+
+With this distribution, not as many variables look significant.
+
+![img](pics/pic_107.png)
+
+**In these results, _Alpha is the test. If the value is equal to 0, then it is telling us that there is no difference between this and the Poisson.** 
+
+Statistically, this is not zero, so that means that the Negative Binomial distribution is better and the p-values and parameter estimates are more believable. 
+
+If _Alpha is not significant, you should use the Poisson instead.
+
+
+#### Zero-Inflated Count Regressions
+
+When you have things that are close to zero, sometimes it is very difficult to fit a distribution to them. We call these zero-inflated regressions. The huge spike of zeros is difficult to work with in this case (due to the lower bounding). For instance, if you are looking at website users per minute, you might have a lot of minutes with 0.
+
+The large number of zero values can throw off the model accuracy because it distorts an accurate measurement of the mean. Zero-inflated Poisson (ZIP) and zero-inflated Negative Binomial (ZINB) models can help reduce this problem.
+
+In essence, what we are going to do are two-stage approaches. In the two-stage regression, first the model determines whether which category the data falls into (in this case, zero or not zero). If it is not zero, then the model predicts the value. 
+
+If it is a zero, it is not estimated any more. If it is anything more than a zero, then it will go into a count regression for a more accurate prediction. 
+
+You can use a logistic regression to determine whether something is zero or not. Inside of proc countreg, you can run logistic regressions.
+
+If you want to do anything fancier than what proc countreg does, then you have to do it yourself in multiple steps.
+
+Do a proc univariate on p91 to see what the distribution actually looks like.
+
+```
+/* Zero-Inflated Poisson and Negative Binomial */
+
+proc univariate data=Advanced.Patent noprint;
+    histogram p91 / midpoints=0 to 50 by 1 vscale=count;
+run;
+```
+
+![img](pics/pic_108.png)
+
+The rule of thumb here is that if the number of 0 values that you have is 50% higher than the next number, then you should consider zero-inflated models. This might not meet the rule of thumb, but we'll use it anyhow.
+
+The distribution has to change to `zip` or `zinb` here. Everything on that line has to do with the count regression. Below the line is the `zeromodel` statement. It is the logistic regression. In essence, there are two model statements here. Note that you have to use `~` instead of ~=` in the zeromodel statement. 
+
+Ideally, you do not want the zeromodel and model statements to be the same. Why? It's a bit of a self-fulfilling prophecy if you do -- splitting on the same variables that you are trying to determine if they are significant leads to significance of those variables. You can use a subset of them. 
+
+```
+proc countreg data=Advanced.Patent;
+    model p91 = lr91 aerosp chemist computer machine vehicles japan us / dist=zip;
+    zeromodel p91 ~ lr91 / link=normal;
+run;
+```
+You can't really compare here with AIC and SBC because we are not using all of our observations. We're comparing apples to oranges. Everything looks significant when we run this. 
+
+![img](pics/pic_109.png)
+
+The last two lines above are the probit model. You can go through and see if is has useful variables. The last line would suggest that your number of research dollars influence whether you are a 0 -- that's good. The cutoff in COUNTREG is 0.5.
+
+```
+proc countreg data=Advanced.Patent;
+    model p91 = lr91 aerosp chemist computer machine vehicles japan us / dist=zinb;
+    zeromodel p91 ~ lr91 / link=normal;
+run;
+```
+
+The `link=normal` part of the `zeromodel` statement signifies a `probit` regression, not a logistic regression. It's just another way of trying to predict a binary response. `link=logit` will give you a logistic regression.
+
+Difference between probit and logit? There's a slight difference in the curve. With the probit, the interpretation is a lot uglier than working with the odds.
+
+![img](pics/pic_110.png)
+
+This still indicates that the negative binomial is a better choice than the Poisson. After we do this, the parameter estimates and significance levels have changed a bit. 
+
+Most likely, in the real world, with this data, you probably would stop with the negative binomial because there were not enough 0 values. 
+
+
+
+
 
